@@ -76,6 +76,7 @@ class MainWindow(qtw.QWidget):
         # Search Button
         self.search_button = qtw.QPushButton("SEARCH")
         self.search_button.clicked.connect(self.searched)
+        # self.search_button.setMaximumWidth(150)
 
         # Image view area
         self.image_view = qtw.QLabel()
@@ -97,6 +98,7 @@ class MainWindow(qtw.QWidget):
         # Back Button
         self.back_button = qtw.QPushButton("BACK")
         self.back_button.clicked.connect(self.backward)
+
         # Make button disabled at the start
         self.back_button.setEnabled(False)
 
@@ -104,34 +106,29 @@ class MainWindow(qtw.QWidget):
         self.forward_button = qtw.QPushButton("FORWARD")
         self.forward_button.clicked.connect(self.forward)
 
-        # Layout stuff
-        grid = qtw.QGridLayout()
-        grid.setSpacing(20)
+        # Search add
+        search_area = qtw.QHBoxLayout()
+        search_area.addWidget(self.search_terms)
+        search_area.addWidget(self.search_button)
+        search_area.setAlignment(qtc.Qt.AlignCenter)
 
-        # Search terms add
-        grid.addWidget(self.search_terms_label, 1, 1)
-        grid.addWidget(self.search_terms, 1, 2)
+        # Forward and back buttons
+        nav_buttons = qtw.QHBoxLayout()
+        nav_buttons.addWidget(self.back_button)
+        nav_buttons.addWidget(self.forward_button)
+        nav_buttons.setAlignment(qtc.Qt.AlignCenter)
 
-        # Search Button add
-        grid.addWidget(self.search_button, 3, 1, 1, 2)
-
-        # Image view add
-        grid.addWidget(self.image_view, 4, 1, 1, 2)
-
-        # Description box add
-        grid.addWidget(self.descbox_title, 5, 1, 1, 2)
-        grid.addWidget(self.descbox, 6, 1, 1, 2)
-
-        # Backwards Button add
-        grid.addWidget(self.back_button, 7, 1)
-
-        # Forward add
-        grid.addWidget(self.forward_button, 7, 2)
-        grid.setColumnStretch(1, 1)
-        grid.setColumnStretch(2, 1)
+        # Alt layout
+        main_layout = qtw.QVBoxLayout()
+        main_layout.addWidget(self.search_terms_label)
+        main_layout.addLayout(search_area)
+        main_layout.addWidget(self.image_view)
+        main_layout.addWidget(self.descbox_title)
+        main_layout.addWidget(self.descbox)
+        main_layout.addLayout(nav_buttons)
 
         # Set window attributes
-        self.setLayout(grid)
+        self.setLayout(main_layout)
 
         self.setWindowTitle(self.title)
         self.setWindowIcon(self.icon)
