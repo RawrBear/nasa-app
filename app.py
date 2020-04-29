@@ -69,19 +69,23 @@ class MainWindow(qtw.QWidget):
         self.search_terms_label = qtw.QLabel(
             "What pictures are you looking for? (eg. Earth):"
         )
-        # search_terms_label.setStyleSheet("background-color:red")
-        self.search_terms_label.setAlignment(qtc.Qt.AlignCenter)
+        self.search_terms_label.setStyleSheet("font: 20pt Verdana")
+        # self.search_terms_label.setAlignment(qtc.Qt.AlignCenter)
+        self.search_terms_label.setContentsMargins(0, 10, 0, 20)
+
         self.search_terms = qtw.QLineEdit()
+        self.search_terms.setMaximumWidth(400)
 
         # Search Button
         self.search_button = qtw.QPushButton("SEARCH")
         self.search_button.clicked.connect(self.searched)
-        # self.search_button.setMaximumWidth(150)
+        self.search_button.setMaximumWidth(400)
 
         # Image view area
         self.image_view = qtw.QLabel()
+        self.image_view.setMinimumHeight(500)
         self.pixmap = qtg.QPixmap()
-        self.resize(300, 300)
+        self.resize(300, 600)
         # Imageview styles
         self.image_view.setStyleSheet("background-color:black")
         self.image_view.setAlignment(qtc.Qt.AlignCenter)
@@ -91,7 +95,7 @@ class MainWindow(qtw.QWidget):
         self.descbox_title.setAlignment(qtc.Qt.AlignCenter)
 
         self.descbox = qtw.QLabel()
-        self.descbox.resize(self.pixmap.width(), 500)
+        self.descbox.resize(self.pixmap.width(), 300)
         self.descbox.setWordWrap(True)
         self.descbox.setStyleSheet("background-color:white")
 
@@ -106,11 +110,14 @@ class MainWindow(qtw.QWidget):
         self.forward_button = qtw.QPushButton("FORWARD")
         self.forward_button.clicked.connect(self.forward)
 
-        # Search add
-        search_area = qtw.QHBoxLayout()
-        search_area.addWidget(self.search_terms)
-        search_area.addWidget(self.search_button)
+        # Search area
+        search_area = qtw.QVBoxLayout()
+        search_area.addWidget(self.search_terms_label)
+        search_area_inner = qtw.QHBoxLayout()
+        search_area_inner.addWidget(self.search_terms)
+        search_area_inner.addWidget(self.search_button)
         search_area.setAlignment(qtc.Qt.AlignCenter)
+        search_area.addLayout(search_area_inner)
 
         # Forward and back buttons
         nav_buttons = qtw.QHBoxLayout()
@@ -120,7 +127,7 @@ class MainWindow(qtw.QWidget):
 
         # Alt layout
         main_layout = qtw.QVBoxLayout()
-        main_layout.addWidget(self.search_terms_label)
+        # main_layout.addWidget(self.search_terms_label)
         main_layout.addLayout(search_area)
         main_layout.addWidget(self.image_view)
         main_layout.addWidget(self.descbox_title)
