@@ -1,6 +1,7 @@
 import re
 import sys
 import requests
+import datetime
 from PyQt5 import QtWidgets as qtw
 from PyQt5 import QtGui as qtg
 from PyQt5 import QtCore as qtc
@@ -26,9 +27,10 @@ class MainWindow(qtw.QWidget):
     # FUNCTIONS
     def searched(self):
         # Vars
+        now = datetime.datetime.now()
         search_term = self.search_terms.text()
         base_url = "https://images-api.nasa.gov/search"
-        payload = {"q": search_term, "media_type": "image"}
+        payload = {"q": search_term, "media_type": "image", "year_start": now.year}
 
         self.r = requests.get(base_url, params=payload)
         self.updateImage(self)
