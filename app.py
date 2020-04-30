@@ -20,6 +20,7 @@ class MainWindow(qtw.QWidget):
         self.icon = qtg.QIcon("rocket.png")
         self.initUI()
         self.item_num = 0
+        self.item_len = ""
         self.image_data = ""
         self.data = ""
         self.r = ""
@@ -33,6 +34,7 @@ class MainWindow(qtw.QWidget):
         payload = {"q": search_term, "media_type": "image", "year_start": now.year}
 
         self.r = requests.get(base_url, params=payload)
+        self.item_num = 0
         self.updateImage(self)
 
     def forward(self):
@@ -49,6 +51,12 @@ class MainWindow(qtw.QWidget):
 
     def updateImage(self, item_num):
         self.data = self.r.json()
+
+        # Check to see if the count has reached the last image and start over if it has
+        self.item_len = len(self.data["collection"]["items"])
+        if self.item_num == self.item_len:
+            self.item_num = 0
+
         desc = self.data["collection"]["items"][self.item_num]["data"][0]["description"]
         # Grab the small version of the image
         thumb = self.data["collection"]["items"][self.item_num]["links"][0]["href"]
@@ -141,7 +149,6 @@ class MainWindow(qtw.QWidget):
 
         # Set window attributes
         self.setLayout(main_layout)
-
         self.setWindowTitle(self.title)
         self.setWindowIcon(self.icon)
         self.setGeometry(self.left, self.top, self.height, self.width)
