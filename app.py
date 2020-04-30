@@ -12,8 +12,8 @@ class MainWindow(qtw.QWidget):
         super().__init__(*args, **kwargs)
 
         # Define window attributes
-        self.title = "Nasa Image Archive Viewer"
-        self.width = 650
+        self.title = "Nasa Archive Image Viewer"
+        self.width = 500
         self.height = 500
         self.left = 200
         self.top = 200
@@ -69,8 +69,8 @@ class MainWindow(qtw.QWidget):
         self.search_terms_label = qtw.QLabel(
             "What pictures are you looking for? (eg. Earth):"
         )
-        self.search_terms_label.setStyleSheet("font: 20pt Verdana")
-        # self.search_terms_label.setAlignment(qtc.Qt.AlignCenter)
+        self.search_terms_label.setStyleSheet("font: 14pt Verdana")
+        self.search_terms_label.setAlignment(qtc.Qt.AlignCenter)
         self.search_terms_label.setContentsMargins(0, 10, 0, 20)
 
         self.search_terms = qtw.QLineEdit()
@@ -84,20 +84,25 @@ class MainWindow(qtw.QWidget):
         # Image view area
         self.image_view = qtw.QLabel()
         self.image_view.setMinimumHeight(500)
+        self.image_view.setMinimumWidth(1000)
+
         self.pixmap = qtg.QPixmap()
         self.resize(300, 600)
         # Imageview styles
         self.image_view.setStyleSheet("background-color:black")
         self.image_view.setAlignment(qtc.Qt.AlignCenter)
 
-        # Description box
-        self.descbox_title = qtw.QLabel("Description")
+        # Description box title
+        self.descbox_title = qtw.QLabel("Information About The Image:")
         self.descbox_title.setAlignment(qtc.Qt.AlignCenter)
-
+        self.descbox_title.setContentsMargins(0, 20, 0, 20)
+        self.descbox_title.setStyleSheet("font: 14pt Verdana")
+        # Desciption box
         self.descbox = qtw.QLabel()
         self.descbox.resize(self.pixmap.width(), 300)
         self.descbox.setWordWrap(True)
         self.descbox.setStyleSheet("background-color:white")
+        self.descbox.setMinimumHeight(200)
 
         # Back Button
         self.back_button = qtw.QPushButton("BACK")
@@ -118,6 +123,7 @@ class MainWindow(qtw.QWidget):
         search_area_inner.addWidget(self.search_button)
         search_area.setAlignment(qtc.Qt.AlignCenter)
         search_area.addLayout(search_area_inner)
+        search_area.setContentsMargins(0, 0, 0, 20)
 
         # Forward and back buttons
         nav_buttons = qtw.QHBoxLayout()
@@ -127,7 +133,7 @@ class MainWindow(qtw.QWidget):
 
         # Alt layout
         main_layout = qtw.QVBoxLayout()
-        # main_layout.addWidget(self.search_terms_label)
+        # main_layout.setGeometry(self, 0, 0, 0, 500)
         main_layout.addLayout(search_area)
         main_layout.addWidget(self.image_view)
         main_layout.addWidget(self.descbox_title)
