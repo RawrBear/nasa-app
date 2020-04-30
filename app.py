@@ -133,7 +133,6 @@ class MainWindow(qtw.QWidget):
 
         # Alt layout
         main_layout = qtw.QVBoxLayout()
-        # main_layout.setGeometry(self, 0, 0, 0, 500)
         main_layout.addLayout(search_area)
         main_layout.addWidget(self.image_view)
         main_layout.addWidget(self.descbox_title)
